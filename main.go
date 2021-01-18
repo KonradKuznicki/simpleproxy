@@ -10,7 +10,7 @@ import (
 func checkServer(url string) error {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
-		IdleConnTimeout:    3 * time.Second,
+		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
 	}
 	client := &http.Client{Transport: tr}
@@ -32,8 +32,9 @@ func main() {
 			if err := checkServer("https://10.8.5.37:8443/web/guest/home"); err != nil {
 				fmt.Fprint(w, "{\"status\": \"error\", \"error\": \"tunnel down\"}\n")
 				fmt.Println(err)
+			} else {
+				fmt.Fprint(w, "{\"status\": \"ok\"}\n")
 			}
-			fmt.Fprint(w, "{\"status\": \"ok\"}\n")
 		})
 
 		http.ListenAndServe("0.0.0.0:8001", nil)
