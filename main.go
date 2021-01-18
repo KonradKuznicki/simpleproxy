@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"github.com/armon/go-socks5"
 	"net/http"
@@ -12,6 +13,7 @@ func checkServer(url string) error {
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
+		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
 	_, err := client.Get(url)
