@@ -15,7 +15,8 @@ func main() {
 
 	go func() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
+			w.Header().Set("Content-Type", "application/json")
+			fmt.Fprint(w, "{\"status\": \"ok\"}\n")
 		})
 
 		http.ListenAndServe("0.0.0.0:8001", nil)
