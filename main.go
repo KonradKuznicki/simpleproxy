@@ -18,7 +18,7 @@ func main() {
 			fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
 		})
 
-		http.ListenAndServe(":8001", nil)
+		http.ListenAndServe("0.0.0.0:8001", nil)
 	}()
 
 	// Create SOCKS5 proxy on localhost port 8000
