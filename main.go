@@ -11,7 +11,7 @@ import (
 func checkServer(url string) error {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
-		IdleConnTimeout:    30 * time.Second,
+		IdleConnTimeout:    5 * time.Second,
 		DisableCompression: true,
 		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
 	}
