@@ -32,7 +32,7 @@ func main() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 			if err := checkServer("https://10.8.5.37:8443/web/guest/home"); err != nil {
-				fmt.Fprint(w, "{\"status\": \"error\", \"error\": \"tunnel down\"}\n")
+				fmt.Fprint(w, "{\"status\": \"error\", \"error\": \"tunnel down or host not responding, check logs\"}\n")
 				fmt.Println(err)
 			} else {
 				fmt.Fprint(w, "{\"status\": \"ok\"}\n")
