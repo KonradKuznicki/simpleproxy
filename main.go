@@ -4,7 +4,20 @@ import (
 	"fmt"
 	"github.com/armon/go-socks5"
 	"net/http"
+	"time"
 )
+
+func checkServer(url string) error {
+	tr := &http.Transport{
+		MaxIdleConns:       10,
+		IdleConnTimeout:    3 * time.Second,
+		DisableCompression: true,
+	}
+	client := &http.Client{Transport: tr}
+	_, err := client.Get(url)
+
+	return err
+}
 
 func main() {
 	conf := &socks5.Config{}
@@ -16,6 +29,10 @@ func main() {
 	go func() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
+			if err := checkServer("https://10.8.5.37:8443/web/guest/home"); err != nil {
+				fmt.Fprint(w, "{\"status\": \"error\", \"error\": \"tunnel down\"}\n")
+				fmt.Println(err)
+			}
 			fmt.Fprint(w, "{\"status\": \"ok\"}\n")
 		})
 
